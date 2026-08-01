@@ -1,0 +1,22 @@
+# docker run -p 52773:52773 -p 8888:8888 iris-embedded-jupyter --check-caps false
+# docker exec -it <containerID> ./start-jupyter.sh
+services:
+  iris:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iris-embedded-jupyter
+    command: --check-caps false
+#    command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''" 
+    environment: 
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_ALLOW_INSECURE_WRITES=true
+    ports:
+      - 1972
+      - 8888:8888
+      - 52773:52773
+      - 53773
+    restart: always
+    volumes:
+      - .:/home/jovyan
+      - ./data:/app/data
